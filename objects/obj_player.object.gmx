@@ -26,14 +26,55 @@
           <argument>
             <kind>1</kind>
             <string>///Initialise Variables
-grav = 2;
+grav = 0.5;
 hsp = 0;
 vsp = 0;
 movespeed = 4;
-jumpspeed_normal = 15;
+jumpspeed_normal = 7;
 jumpspeed_powerup = 30;
 
 jumpspeed = jumpspeed_normal;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//initialize emitter
+//blood system
+partBlood_sys = part_system_create();
+
+//lood particle
+partBlood = part_type_create();
+part_type_sprite(partBlood,blood,0,1,0);
+part_type_size(partBlood,0.45,0.001,-0.01,0);
+part_type_speed(partBlood,1,3,0,0);
+part_type_direction(partBlood,0,359,0,40);
+part_type_gravity(partBlood,0.4,270);
+part_type_life(partBlood,50,100);
+
+// create emmmiter
+//partBlood_emit = part_emitter_create(partBlood_sys);
+
+//update emmitter
+//part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y+5,obj_player.y+5,1,1);
+//part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
+
+
 </string>
           </argument>
         </arguments>
@@ -97,8 +138,10 @@ if(place_meeting(x,y+1,obj_wall) || place_meeting(x,y+1,obj_dead_platform)){
 }
 
 if(vsp&lt;0) &amp;&amp;  (!key_jump_held)
-    vsp = max(vsp,-jumpspeed/4);
-
+ vsp = max(vsp,-jumpspeed/4);
+ 
+if(keyboard_check_released(vk_up) and vspeed&lt;0){vspeed*=0.5; }
+ 
 //Horizontal Collision
 if(place_meeting(x+hsp,y,obj_wall)  || place_meeting(x+hsp,y,obj_dead_platform)){
     
@@ -149,6 +192,10 @@ else{
 
     //Enemy Collision
 if(place_meeting(x,y,obj_saw)){
+partBlood_emit = part_emitter_create(partBlood_sys);
+part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y+5,obj_player.y+5,1,1);
+part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
+        sound_play(snd_saw);
         x = xstart;
         y = ystart;
         
@@ -156,6 +203,10 @@ if(place_meeting(x,y,obj_saw)){
 
 if(place_meeting(x,y,obj_spikes)){
         instance_create(x,y,obj_dead_platform);
+        partBlood_emit = part_emitter_create(partBlood_sys);
+        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y+5,obj_player.y+5,1,1);
+        part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
+        sound_play(snd_spikes);
         x = xstart;
         y = ystart;
         
@@ -163,6 +214,58 @@ if(place_meeting(x,y,obj_spikes)){
 
 
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_saw">
+      <action>
+        <libid>1</libid>
+        <id>211</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_sound</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>6</kind>
+            <sound>snd_saw</sound>
+          </argument>
+          <argument>
+            <kind>3</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_spikes">
+      <action>
+        <libid>1</libid>
+        <id>211</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_sound</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>6</kind>
+            <sound>snd_spikes</sound>
+          </argument>
+          <argument>
+            <kind>3</kind>
+            <string>0</string>
           </argument>
         </arguments>
       </action>
