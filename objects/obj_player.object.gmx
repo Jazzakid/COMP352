@@ -66,6 +66,7 @@ part_type_speed(partBlood,1,3,0,0);
 part_type_direction(partBlood,0,359,0,40);
 part_type_gravity(partBlood,0.4,270);
 part_type_life(partBlood,50,100);
+part_system_depth(partBlood, -2 );
 
 // create emmmiter
 //partBlood_emit = part_emitter_create(partBlood_sys);
@@ -193,7 +194,7 @@ else{
     //Enemy Collision
 if(place_meeting(x,y,obj_saw)){
 partBlood_emit = part_emitter_create(partBlood_sys);
-part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y+5,obj_player.y+5,1,1);
+part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
 part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
         sound_play(snd_saw);
         x = xstart;
@@ -204,7 +205,7 @@ part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
 if(place_meeting(x,y,obj_spikes)){
         instance_create(x,y,obj_dead_platform);
         partBlood_emit = part_emitter_create(partBlood_sys);
-        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y+5,obj_player.y+5,1,1);
+        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
         part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
         sound_play(snd_spikes);
         x = xstart;
