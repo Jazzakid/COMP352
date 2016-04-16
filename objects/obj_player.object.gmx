@@ -192,15 +192,11 @@ else{
 }
 
     //Enemy Collision
-if(place_meeting(x,y,obj_saw)){
+/*if(place_meeting(x,y,obj_saw)){
 partBlood_emit = part_emitter_create(partBlood_sys);
 part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
-part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
-        sound_play(snd_saw);
-        x = xstart;
-        y = ystart;
-        
-}
+part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);     
+} */
 
 if(place_meeting(x,y,obj_spikes)){
         instance_create(x,y,obj_dead_platform);
@@ -215,32 +211,6 @@ if(place_meeting(x,y,obj_spikes)){
 
 
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_saw">
-      <action>
-        <libid>1</libid>
-        <id>211</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_sound</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>6</kind>
-            <sound>snd_saw</sound>
-          </argument>
-          <argument>
-            <kind>3</kind>
-            <string>0</string>
           </argument>
         </arguments>
       </action>

@@ -3,7 +3,7 @@
   <spriteName>spr_saw</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -34,7 +34,7 @@ sawID = id;
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="1">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -80,10 +80,45 @@ sheepHit = false;
 
 if sheepHit == false
     {
-        image_angle +=50;
+        image_angle +=60;
     }
     
+sawID = id;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_player">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if sheepHit ==false
+{
+    sheepHit = true;
+    alarm[0] = 150;
+    image_angle = 1;
+    audio_play_sound(snd_saw, 10, false);
+    obj_player.x = obj_player.xstart;
+    obj_player.y = obj_player.ystart;
+    obj_player.partBlood_emit = part_emitter_create(obj_player.partBlood_sys);
+    part_emitter_region(obj_player.partBlood_sys,obj_player.partBlood_emit,x+5,x+5,y-10,y-10,1,1);
+    part_emitter_burst(obj_player.partBlood_sys,obj_player.partBlood_emit,obj_player.partBlood,500);  
+}
 </string>
           </argument>
         </arguments>

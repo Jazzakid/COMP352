@@ -22,6 +22,9 @@
     <sprite>sprites\spr_spikes</sprite>
     <sprite>sprites\spr_saw</sprite>
     <sprite>sprites\blood</sprite>
+    <sprite>sprites\spr_level_exit</sprite>
+    <sprite>sprites\spr_level_exit_opening</sprite>
+    <sprite>sprites\spr_checkpoint</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background1</background>
@@ -39,8 +42,11 @@
     <object>objects\obj_saw</object>
     <object>objects\obj_exit</object>
     <object>objects\obj_level_exit</object>
+    <object>objects\obj_checkpoint</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_1</room>
+    <room>rooms\rm_2</room>
     <room>rooms\Level1</room>
   </rooms>
   <help>
