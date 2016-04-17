@@ -3,7 +3,7 @@
   <spriteName>spr_player_idle</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -32,6 +32,7 @@ vsp = 0;
 movespeed = 4;
 jumpspeed_normal = 7;
 jumpspeed_powerup = 30;
+hanging = false;
 
 jumpspeed = jumpspeed_normal;
 </string>
@@ -81,6 +82,29 @@ part_system_depth(partBlood, -2 );
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>hanging = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -121,7 +145,23 @@ part_system_depth(partBlood, -2 );
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//Get Player Input
+            <string>//*******************************************************************
+//*******************************************************************
+//GM COMMANDS - COMMENT THIS SECTION OUT FOR CLIENT VERSION
+
+    //Goto previous room
+    if(room_exists(room_previous(room)) &amp;&amp; keyboard_check_pressed(vk_f1))
+            room_goto_previous();
+    //Goto next room
+    if(room_exists(room_next(room)) &amp;&amp; keyboard_check_pressed(vk_f2))
+            room_goto_next();
+    //Restart level
+    if(keyboard_check_pressed(vk_f3))
+            room_restart();
+//*******************************************************************           
+//*******************************************************************
+
+//Get Player Input
 key_right = keyboard_check(vk_right) || keyboard_check(ord("D"));
 key_left = keyboard_check(vk_left) || keyboard_check(ord("A"));
 key_jump_held = keyboard_check(vk_space) || keyboard_check(vk_shift);
@@ -142,6 +182,12 @@ if(vsp&lt;0) &amp;&amp;  (!key_jump_held)
  vsp = max(vsp,-jumpspeed/4);
  
 if(keyboard_check_released(vk_up) and vspeed&lt;0){vspeed*=0.5; }
+
+//Respawn if fall off of map
+if(y&gt;window_get_height()){
+    x=xstart;
+    y=ystart;
+}
  
 //Horizontal Collision
 if(place_meeting(x+hsp,y,obj_wall)  || place_meeting(x+hsp,y,obj_dead_platform)){
@@ -171,6 +217,75 @@ if(place_meeting(x,y+vsp,obj_wall)  || place_meeting(x,y+vsp,obj_dead_platform))
 
 y += vsp;
 
+//Collision with Spikes
+if(place_meeting(x,y,obj_spikes)){
+        instance_create(x,y,obj_dead_platform);
+        partBlood_emit = part_emitter_create(partBlood_sys);
+        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
+        part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
+        sound_play(snd_spikes);
+        x = xstart;
+        y = ystart;
+        
+}
+
+//Collision with Left Hook
+if(place_meeting(x,y,obj_hook_left)){
+        with(instance_nearest(x,y,obj_hook_left)){
+            instance_destroy();
+            instance_create(x,y,obj_dead_hang_left);
+        }
+        partBlood_emit = part_emitter_create(partBlood_sys);
+        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
+        part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
+        sound_play(snd_spikes);
+        x = xstart;
+        y = ystart;
+        
+}
+
+//Collision with Right Hook
+if(place_meeting(x,y,obj_hook_right)){
+        with(instance_nearest(x,y,obj_hook_right)){
+            instance_destroy();
+            instance_create(x,y,obj_dead_hang_right);
+        }
+        partBlood_emit = part_emitter_create(partBlood_sys);
+        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
+        part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
+        sound_play(snd_spikes);
+        x = xstart;
+        y = ystart;
+        
+}
+
+//Collision with Left Dead Hanging Sheep
+if(place_meeting(x,y,obj_dead_hang_left) &amp;&amp; hanging = false &amp;&amp; vsp!=0){
+            x = instance_nearest(x,y,obj_dead_hang_left).x+16;
+            y = instance_nearest(x,y,obj_dead_hang_left).y+60;
+            image_angle = -80;
+        if(key_jump){
+            hanging = true;
+            alarm[1] = 20;  
+            vsp=key_jump * -jumpspeed;
+            image_angle = 1;
+        }
+        
+}
+
+//Collision with Right Dead Hanging Sheep
+if(place_meeting(x,y,obj_dead_hang_right) &amp;&amp; hanging = false &amp;&amp; vsp!=0){
+            x = instance_nearest(x,y,obj_dead_hang_right).x+16;
+            y = instance_nearest(x,y,obj_dead_hang_right).y+60;
+            image_angle = -80;
+        if(key_jump){
+            hanging = true;
+            alarm[1] = 20;  
+            vsp=key_jump * -jumpspeed;
+            image_angle = 1;
+        }
+}
+
 //Animate
 if (move!=0)
     image_xscale = -move;
@@ -187,8 +302,6 @@ else{
     else
         sprite_index = spr_player_fall;
     
-
-    
 }
 
     //Enemy Collision
@@ -197,17 +310,6 @@ partBlood_emit = part_emitter_create(partBlood_sys);
 part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
 part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);     
 } */
-
-if(place_meeting(x,y,obj_spikes)){
-        instance_create(x,y,obj_dead_platform);
-        partBlood_emit = part_emitter_create(partBlood_sys);
-        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
-        part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
-        sound_play(snd_spikes);
-        x = xstart;
-        y = ystart;
-        
-}
 
 
 </string>

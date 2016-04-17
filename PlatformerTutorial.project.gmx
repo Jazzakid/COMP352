@@ -25,11 +25,13 @@
     <sprite>sprites\spr_level_exit</sprite>
     <sprite>sprites\spr_level_exit_opening</sprite>
     <sprite>sprites\spr_checkpoint</sprite>
+    <sprite>sprites\spr_hook</sprite>
+    <sprite>sprites\spr_hook_generator</sprite>
+    <sprite>sprites\sprite18</sprite>
+    <sprite>sprites\sprite19</sprite>
+    <sprite>sprites\spr_dead_hang</sprite>
   </sprites>
-  <backgrounds name="background">
-    <background>background\background1</background>
-    <background>background\background2</background>
-  </backgrounds>
+  <backgrounds name="background"/>
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\obj_wall</object>
@@ -43,11 +45,19 @@
     <object>objects\obj_exit</object>
     <object>objects\obj_level_exit</object>
     <object>objects\obj_checkpoint</object>
+    <object>objects\obj_hook_left</object>
+    <object>objects\obj_hook_right</object>
+    <object>objects\obj_hook_generator_left</object>
+    <object>objects\obj_hook_generator_right</object>
+    <object>objects\obj_dead_hang_left</object>
+    <object>objects\obj_dead_hang_right</object>
+    <object>objects\obj_blackhole</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_1</room>
     <room>rooms\rm_2</room>
-    <room>rooms\Level1</room>
+    <room>rooms\rm_3</room>
+    <room>rooms\testlevel</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
