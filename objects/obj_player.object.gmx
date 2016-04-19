@@ -145,9 +145,9 @@ part_system_depth(partBlood, -2 );
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//*******************************************************************
+            <string>//GM COMMANDS - COMMENT THIS SECTION OUT FOR CLIENT VERSION
 //*******************************************************************
-//GM COMMANDS - COMMENT THIS SECTION OUT FOR CLIENT VERSION
+//*******************************************************************
 
     //Goto previous room
     if(room_exists(room_previous(room)) &amp;&amp; keyboard_check_pressed(vk_f1))
@@ -158,14 +158,22 @@ part_system_depth(partBlood, -2 );
     //Restart level
     if(keyboard_check_pressed(vk_f3))
             room_restart();
+            
 //*******************************************************************           
 //*******************************************************************
+
+
 
 //Get Player Input
 key_right = keyboard_check(vk_right) || keyboard_check(ord("D"));
 key_left = keyboard_check(vk_left) || keyboard_check(ord("A"));
 key_jump_held = keyboard_check(vk_space) || keyboard_check(vk_shift);
 key_jump = keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_shift);
+
+if(key_left)
+    left = true;
+if(key_right)
+    left = false;
 
 //React to inputs
 move = key_right - key_left;
@@ -181,7 +189,8 @@ if(place_meeting(x,y+1,obj_wall) || place_meeting(x,y+1,obj_dead_platform)){
 if(vsp&lt;0) &amp;&amp;  (!key_jump_held)
  vsp = max(vsp,-jumpspeed/4);
  
-if(keyboard_check_released(vk_up) and vspeed&lt;0){vspeed*=0.5; }
+if(keyboard_check_released(vk_up) and vspeed&lt;0)
+    vspeed*=0.5; 
 
 //Respawn if fall off of map
 if(y&gt;window_get_height()){
@@ -261,12 +270,22 @@ if(place_meeting(x,y,obj_hook_right)){
 
 //Collision with Left Dead Hanging Sheep
 if(place_meeting(x,y,obj_dead_hang_left) &amp;&amp; hanging = false &amp;&amp; vsp!=0){
-            x = instance_nearest(x,y,obj_dead_hang_left).x+16;
-            y = instance_nearest(x,y,obj_dead_hang_left).y+60;
-            image_angle = -80;
+      
+          if(left = false){
+                x = instance_nearest(x,y,obj_dead_hang_left).x-32;
+                y = instance_nearest(x,y,obj_dead_hang_left).y+60;
+                image_angle = 80;
+                image_xscale = -1;
+            }
+            if(left = true){
+                x = instance_nearest(x,y,obj_dead_hang_left).x+16;
+                y = instance_nearest(x,y,obj_dead_hang_left).y+60;
+                image_angle = 280;
+                image_xscale = 1;
+            }
         if(key_jump){
             hanging = true;
-            alarm[1] = 20;  
+            alarm[1] = 30;  
             vsp=key_jump * -jumpspeed;
             image_angle = 1;
         }
@@ -275,19 +294,29 @@ if(place_meeting(x,y,obj_dead_hang_left) &amp;&amp; hanging = false &amp;&amp; v
 
 //Collision with Right Dead Hanging Sheep
 if(place_meeting(x,y,obj_dead_hang_right) &amp;&amp; hanging = false &amp;&amp; vsp!=0){
-            x = instance_nearest(x,y,obj_dead_hang_right).x+16;
-            y = instance_nearest(x,y,obj_dead_hang_right).y+60;
-            image_angle = -80;
+
+            if(left = false){
+                x = instance_nearest(x,y,obj_dead_hang_right).x-32;
+                y = instance_nearest(x,y,obj_dead_hang_right).y+60;
+                image_angle = 80;
+                image_xscale = -1;
+            }
+            if(left = true){
+                x = instance_nearest(x,y,obj_dead_hang_right).x+16;
+                y = instance_nearest(x,y,obj_dead_hang_right).y+60;
+                image_angle = 280;
+                image_xscale = 1;
+            }
         if(key_jump){
             hanging = true;
-            alarm[1] = 20;  
+            alarm[1] = 30;  
             vsp=key_jump * -jumpspeed;
             image_angle = 1;
         }
 }
 
 //Animate
-if (move!=0)
+if (move!=0 &amp;&amp; !place_meeting(x,y,obj_dead_hang_right))
     image_xscale = -move;
     
 if (place_meeting(x,y+1,obj_wall) || place_meeting(x,y+1,obj_dead_platform)){
