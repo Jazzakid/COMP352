@@ -13,13 +13,9 @@
     <sprite>sprites\spr_enemy</sprite>
     <sprite>sprites\spr_player_b</sprite>
     <sprite>sprites\spr_powerup</sprite>
-    <sprite>sprites\spr_player_idle</sprite>
-    <sprite>sprites\spr_player_jump</sprite>
-    <sprite>sprites\spr_player_fall</sprite>
-    <sprite>sprites\spr_player_move</sprite>
-    <sprite>sprites\spr_player_dead</sprite>
     <sprite>sprites\spr_platform</sprite>
     <sprite>sprites\spr_spikes</sprite>
+    <sprite>sprites\spr_spikes_ceiling</sprite>
     <sprite>sprites\spr_saw</sprite>
     <sprite>sprites\blood</sprite>
     <sprite>sprites\spr_level_exit</sprite>
@@ -29,8 +25,21 @@
     <sprite>sprites\sprite18</sprite>
     <sprite>sprites\sprite19</sprite>
     <sprite>sprites\spr_dead_hang</sprite>
-    <sprite>sprites\spr_checkpoint1</sprite>
-    <sprite>sprites\spr_checkpoint2</sprite>
+    <sprites name="crusher">
+      <sprite>sprites\spr_crusher</sprite>
+      <sprite>sprites\spr_crusher_activate</sprite>
+    </sprites>
+    <sprites name="player">
+      <sprite>sprites\spr_player_jump</sprite>
+      <sprite>sprites\spr_player_fall</sprite>
+      <sprite>sprites\spr_player_dead</sprite>
+      <sprite>sprites\spr_player_move</sprite>
+      <sprite>sprites\spr_player_idle</sprite>
+    </sprites>
+    <sprites name="checkpoint">
+      <sprite>sprites\spr_checkpoint1</sprite>
+      <sprite>sprites\spr_checkpoint2</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -40,24 +49,29 @@
     <object>objects\obj_powerup</object>
     <object>objects\obj_enemy_nofall</object>
     <object>objects\obj_enemy</object>
-    <object>objects\obj_spikes</object>
     <object>objects\obj_dead_platform</object>
-    <object>objects\obj_saw</object>
     <object>objects\obj_exit</object>
     <object>objects\obj_level_exit</object>
     <object>objects\obj_checkpoint</object>
-    <object>objects\obj_hook_left</object>
-    <object>objects\obj_hook_right</object>
-    <object>objects\obj_hook_generator_left</object>
-    <object>objects\obj_hook_generator_right</object>
     <object>objects\obj_dead_hang_left</object>
     <object>objects\obj_dead_hang_right</object>
-    <object>objects\obj_blackhole</object>
+    <objects name="traps">
+      <object>objects\obj_spikes</object>
+      <object>objects\obj_hook_right</object>
+      <object>objects\obj_blackhole</object>
+      <object>objects\obj_hook_generator_left</object>
+      <object>objects\obj_hook_generator_right</object>
+      <object>objects\obj_hook_left</object>
+      <object>objects\obj_saw</object>
+    </objects>
+    <object>objects\obj_crusher</object>
+    <object>objects\obj_crusher_2</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_1</room>
     <room>rooms\rm_2</room>
     <room>rooms\rm_3</room>
+    <room>rooms\rm_4</room>
     <room>rooms\testlevel</room>
   </rooms>
   <help>

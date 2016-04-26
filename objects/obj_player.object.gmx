@@ -33,6 +33,7 @@ movespeed = 4;
 jumpspeed_normal = 7;
 jumpspeed_powerup = 30;
 hanging = false;
+vspeed = 0;
 
 jumpspeed = jumpspeed_normal;
 </string>
@@ -178,7 +179,7 @@ if(key_right)
 //React to inputs
 move = key_right - key_left;
 hsp = move * movespeed;
-if(vsp &lt; 10){
+if(vsp &lt; 25){
     vsp += grav;
 }
 
@@ -222,6 +223,8 @@ if(place_meeting(x,y+vsp,obj_wall)  || place_meeting(x,y+vsp,obj_dead_platform))
         y+=sign(vsp);
     }
     vsp = 0;
+    //Stop Bouncing
+    vspeed = 0;
 }
 
 y += vsp;
@@ -315,6 +318,17 @@ if(place_meeting(x,y,obj_dead_hang_right) &amp;&amp; hanging = false &amp;&amp; 
         }
 }
 
+//Collision with Crusher
+
+if place_meeting(x, y+1, obj_wall) &amp;&amp; place_meeting(x, y-1, obj_crusher) || place_meeting(x, y-1, obj_crusher_2)
+    {
+        partBlood_emit = part_emitter_create(partBlood_sys);
+        part_emitter_region(partBlood_sys,partBlood_emit,obj_player.x+5,obj_player.x+5,obj_player.y-10,obj_player.y-10,1,1);
+        part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
+        x = xstart;
+        y = ystart;
+    }
+
 //Animate
 if (move!=0 &amp;&amp; !place_meeting(x,y,obj_dead_hang_right))
     image_xscale = -move;
@@ -368,6 +382,29 @@ part_emitter_burst(partBlood_sys,partBlood_emit,partBlood,500);
           <argument>
             <kind>3</kind>
             <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_text(132, 152, vsp);
+</string>
           </argument>
         </arguments>
       </action>
