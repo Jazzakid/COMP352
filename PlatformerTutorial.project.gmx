@@ -73,6 +73,12 @@
     <room>rooms\rm_3</room>
     <room>rooms\rm_4</room>
     <room>rooms\testlevel</room>
+    <room>rooms\room4</room>
+    <room>rooms\room5</room>
+    <room>rooms\room7</room>
+    <room>rooms\room8</room>
+    <room>rooms\room9</room>
+    <room>rooms\room10</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
