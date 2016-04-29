@@ -40,6 +40,7 @@
       <sprite>sprites\spr_checkpoint1</sprite>
       <sprite>sprites\spr_checkpoint2</sprite>
     </sprites>
+    <sprite>sprites\info</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -66,6 +67,7 @@
     </objects>
     <object>objects\obj_crusher</object>
     <object>objects\obj_crusher_2</object>
+    <object>objects\info_logo</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_1</room>
