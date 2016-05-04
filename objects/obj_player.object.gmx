@@ -56,7 +56,7 @@ jumpspeed = jumpspeed_normal;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//initialize emitter
+            <string>///initialize emitter
 //blood system
 partBlood_sys = part_system_create();
 
@@ -279,12 +279,14 @@ if(place_meeting(x,y,obj_dead_hang_left) &amp;&amp; hanging = false &amp;&amp; v
                 y = instance_nearest(x,y,obj_dead_hang_left).y+60;
                 image_angle = 80;
                 image_xscale = -1;
+                vsp = -15;
             }
             if(left = true){
                 x = instance_nearest(x,y,obj_dead_hang_left).x+16;
                 y = instance_nearest(x,y,obj_dead_hang_left).y+60;
                 image_angle = 280;
                 image_xscale = 1;
+                vsp = -15;
             }
         if(key_jump){
             hanging = true;
@@ -303,12 +305,14 @@ if(place_meeting(x,y,obj_dead_hang_right) &amp;&amp; hanging = false &amp;&amp; 
                 y = instance_nearest(x,y,obj_dead_hang_right).y+60;
                 image_angle = 80;
                 image_xscale = -1;
+                vsp = -15;
             }
             if(left = true){
                 x = instance_nearest(x,y,obj_dead_hang_right).x+16;
                 y = instance_nearest(x,y,obj_dead_hang_right).y+60;
                 image_angle = 280;
                 image_xscale = 1;
+                vsp = -15;
             }
         if(key_jump){
             hanging = true;
